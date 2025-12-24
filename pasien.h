@@ -49,6 +49,8 @@ void createListPasien(ListPasien &LP);
 
 // Insert Parent
 void insertFirstPenyakit(ListPenyakit &LD, adrPenyakit P);
+void insertLastPenyakit(ListPenyakit &LD, adrPenyakit P);
+void insertFirstPasien(ListPasien &LP, adrPasien P);
 void insertLastPasien(ListPasien &LP, adrPasien P);
 
 // Delete
@@ -72,6 +74,7 @@ void deleteRelasiPasien(adrPenyakit py, int idPasien);
 void showAllPenyakit(ListPenyakit LD);
 void showAllPasien(ListPasien LP);
 void showPenyakitWithPasien(ListPenyakit LD);
+void showPasienDenganDaftarPenyakit(ListPasien LP, ListPenyakit LD);
 void showPasienDenganPenyakit(ListPenyakit LD, int idPenyakit);
 void showPenyakitDariPasien(ListPenyakit LD, int idPasien);
 
