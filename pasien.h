@@ -47,7 +47,7 @@ struct StatistikPenyakit {
 void createListPenyakit(ListPenyakit &LD);
 void createListPasien(ListPasien &LP);
 
-// Insert Parent
+// Insert
 void insertFirstPenyakit(ListPenyakit &LD, adrPenyakit P);
 void insertLastPenyakit(ListPenyakit &LD, adrPenyakit P);
 void insertFirstPasien(ListPasien &LP, adrPasien P);
@@ -70,11 +70,15 @@ adrPasien findPasien(ListPasien LP, int id);
 void connectPasienPenyakit(adrPenyakit py, adrPasien ps);
 void deleteRelasiPasien(adrPenyakit py, int idPasien);
 
-// Show
+// Tampilkan semua isi list
 void showAllPenyakit(ListPenyakit LD);
 void showAllPasien(ListPasien LP);
+
+// Tampilkan relasi
 void showPenyakitWithPasien(ListPenyakit LD);
 void showPasienDenganDaftarPenyakit(ListPasien LP, ListPenyakit LD);
+
+// Tampilkan berdasarkan kriteria
 void showPasienDenganPenyakit(ListPenyakit LD, int idPenyakit);
 void showPenyakitDariPasien(ListPenyakit LD, int idPasien);
 
