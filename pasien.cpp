@@ -55,11 +55,11 @@ void insertFirstPasien(ListPasien &LP, adrPasien P) {
     LP.first = P;
 }
 
-void insertLastPasien(ListPasien &LD, adrPasien P) {
-    if (LD.first == NULL) {
-        LD.first = P;
+void insertLastPasien(ListPasien &LP, adrPasien P) {
+    if (LP.first == NULL) {
+        LP.first = P;
     } else {
-        adrPasien Q = LD.first;
+        adrPasien Q = LP.first;
         while (Q->next != NULL)
             Q = Q->next;
         Q->next = P;
@@ -295,6 +295,7 @@ void showPenyakitDariPasien(ListPenyakit LD, int idPasien) {
     }
 }
 
+
 int countPasien(adrPenyakit py) {
     int count = 0;
     adrRelasi R = py->firstRelasi;
@@ -305,8 +306,8 @@ int countPasien(adrPenyakit py) {
     return count;
 }
 
-void showTop5Penyakit(ListPenyakit LP) {
-    if (LP.first == NULL) {
+void showTop5Penyakit(ListPenyakit LD) {
+    if (LD.first == NULL) {
         cout << "Data penyakit kosong\n";
         return;
     }
@@ -315,7 +316,7 @@ void showTop5Penyakit(ListPenyakit LP) {
     int n = 0;
 
     //Ambil data penyakit + jumlah pasien
-    adrPenyakit P = LP.first;
+    adrPenyakit P = LD.first;
     while (P != NULL) {
         data[n].nama = P->nama;
         data[n].jumlah = countPasien(P);
