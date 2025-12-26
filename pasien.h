@@ -60,10 +60,11 @@ void insertFirstPasien(ListPasien &LP, adrPasien P);
 void insertLastPasien(ListPasien &LP, adrPasien P);
 
 // Relasi
-void connectPasienPenyakit(adrPenyakit py, adrPasien ps);
-void deleteRelasiPasien(adrPenyakit py, int idPasien);
+bool connectPasienPenyakit(adrPenyakit py, adrPasien ps);
 
 // Delete
+bool deleteRelasiNode(adrPenyakit py, int idPasien);
+void deleteSemuaRelasiPasien(ListPenyakit &LD, int idPasien);
 void deletePasien(ListPasien &LP, ListPenyakit &LD, int idPasien);
 void deletePenyakit(ListPenyakit &LD, int idPenyakit);
 
