@@ -71,13 +71,17 @@ int main() {
     cout << "\n=== DELETE PASIEN ID 3 (Citra) ===\n";
     deletePasien(LP, LD, 3);
 
-    cout << "\n=== DELETE PENYAKIT ID 102 (Demam) ===\n";
+    cout << "\n=== HAPUS PENYAKIT ID 102 (Demam) ===\n";
     deletePenyakit(LD, 102);
 
-    cout << "\n=== DELETE SEMUA RELASI PASIEN ID 5 (Eka) ===\n";
+    cout << "\n=== HAPUS RELASI PASIEN ID 2 DENGAN ID 103  ===\n";
+    adrPenyakit py = findPenyakit(LD, 103);
+    deleteRelasiNode(py, 2);
+
+    cout << "\n=== HAPUS SEMUA RELASI PASIEN ID 5 (Eka) ===\n";
     deleteSemuaRelasiPasien(LD, 5);
 
-    cout << "\n=== CEK DATA SETELAH DELETE ===\n";
+    cout << "\n=== CEK DATA SETELAH DIHAPUS ===\n";
     cout << "\n=== SEMUA PENYAKIT ===\n";
     showAllPenyakit(LD);
     cout << "\n=== SEMUA PASIEN ===\n";
@@ -117,17 +121,18 @@ int main() {
                 cout << "2. Tambah Pasien\n";
                 cout << "3. Hubungkan Pasien dengan Penyakit\n";
                 cout << "4. Hapus Relasi Pasien dengan Penyakit\n";
-                cout << "5. Hapus Penyakit\n";
-                cout << "6. Hapus Pasien\n";
-                cout << "7. Tampilkan Semua Penyakit\n";
-                cout << "8. Tampilkan Semua Pasien\n";
-                cout << "9. Tampilkan Penyakit dari Pasien Tertentu\n";
-                cout << "10. Tampilkan Pasien dengan Penyakit Tertentu\n";
-                cout << "11. Tampilkan Penyakit beserta Pasien\n";
-                cout << "12. Tampilkan Pasien beserta Daftar Penyakit\n";
-                cout << "13. Tampilkan Top 5 Penyakit Terbanyak\n";
-                cout << "14. Tampilkan Jumlah Pasien per Penyakit\n";
-                cout << "15. Tampilkan Jumlah Pasien dari Penyakit Tertentu\n";
+                cout << "5. Hapus Semua Relasi Pasien dengan Penyakit\n";
+                cout << "6. Hapus Penyakit\n";
+                cout << "7. Hapus Pasien\n";
+                cout << "8. Tampilkan Semua Penyakit\n";
+                cout << "9. Tampilkan Semua Pasien\n";
+                cout << "10. Tampilkan Penyakit dari Pasien Tertentu\n";
+                cout << "11. Tampilkan Pasien dengan Penyakit Tertentu\n";
+                cout << "12. Tampilkan Penyakit beserta Pasien\n";
+                cout << "13. Tampilkan Pasien beserta Daftar Penyakit\n";
+                cout << "14. Tampilkan Top 5 Penyakit Terbanyak\n";
+                cout << "15. Tampilkan Jumlah Pasien per Penyakit\n";
+                cout << "16. Tampilkan Jumlah Pasien dari Penyakit Tertentu\n";
                 cout << "0. Keluar\n";
                 cout << "Pilih menu: ";
                 cin >> pilihan;
@@ -279,6 +284,26 @@ int main() {
                     break;
                 }
                 case 5: {
+                    int idPasien;
+                    cout << "ID Pasien yang akan dihapus: ";
+                    cin >> idPasien;
+
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(1000, '\n');              
+                        cout << "Input harus berupa angka!\n";
+                        continue;
+                    }
+
+                    if (findPasien(LP, idPasien) == NULL) {
+                        cout << "Pasien tidak ditemukan\n";
+                        break;
+                    }
+                    
+                    deleteSemuaRelasiPasien(LD, idPasien);
+                    break;
+                }
+                case 6: {
                     int idPenyakit;
                     cout << endl;
                     cout << "ID Penyakit yang akan dihapus: ";
@@ -286,7 +311,7 @@ int main() {
                     deletePenyakit(LD, idPenyakit);
                     break;
                 }
-                case 6: {
+                case 7: {
                     int idPasien;
                     cout << endl;
                     cout << "ID Pasien yang akan dihapus: ";
@@ -294,17 +319,17 @@ int main() {
                     deletePasien(LP, LD, idPasien);
                     break;
                 }
-                case 7: {
+                case 8: {
                     cout << endl;
                     showAllPenyakit(LD);
                     break;
                 }
-                case 8: {
+                case 9: {
                     cout << endl;
                     showAllPasien(LP);
                     break;
                 }
-                case 9: {
+                case 10: {
                     int idPasien;
                     cout << endl;
                     cout << "ID Pasien: ";
@@ -312,7 +337,7 @@ int main() {
                     showPenyakitDariPasien(LD, idPasien);
                     break;
                 }
-                case 10: {
+                case 11: {
                     int idPenyakit;
                     cout << endl;
                     cout << "ID Penyakit: ";
@@ -320,27 +345,27 @@ int main() {
                     showPasienDenganPenyakit(LD, idPenyakit);
                     break;
                 }
-                case 11: {
+                case 12: {
                     cout << endl;
                     showAllPenyakitWithPasien(LD);
                     break;
                 }
-                case 12: {
+                case 13: {
                     cout << endl;
                     showAllPasienWithPenyakit(LP, LD);
                     break;
                 }
-                case 13: {
+                case 14: {
                     cout << endl;
                     showTop5Penyakit(LD);
                     break;
                 }
-                case 14: {
+                case 15: {
                     cout << endl;
                     showJumlahPasienPerPenyakit(LD);
                     break;
                 }
-                case 15: {
+                case 16: {
                     int idPenyakit;
                     cout << endl;
                     cout << "ID Penyakit: ";
