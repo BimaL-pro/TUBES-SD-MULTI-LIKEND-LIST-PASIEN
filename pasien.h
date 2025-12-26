@@ -43,47 +43,52 @@ struct StatistikPenyakit {
     int jumlah;
 };
 
+////////////////////// FUNCTION SOAL //////////////////////
 // Inisialisasi List
 void createListPenyakit(ListPenyakit &LD);
 void createListPasien(ListPasien &LP);
-
-// Insert
-void insertFirstPenyakit(ListPenyakit &LD, adrPenyakit P);
-void insertLastPenyakit(ListPenyakit &LD, adrPenyakit P);
-void insertFirstPasien(ListPasien &LP, adrPasien P);
-void insertLastPasien(ListPasien &LP, adrPasien P);
-
-// Delete
-void deletePasien(ListPasien &LP, ListPenyakit &LD, int idPasien);
-void deletePenyakit(ListPenyakit &LD, int idPenyakit);
 
 // Alokasi
 adrPenyakit newPenyakit(int id, string nama, string kategori);
 adrPasien newPasien(int id, string nama, int umur);
 adrRelasi newRelasi(adrPasien P);
 
-// Search
-adrPenyakit findPenyakit(ListPenyakit LD, int id);
-adrPasien findPasien(ListPasien LP, int id);
+// Tambah dari depan / belakang
+void insertFirstPenyakit(ListPenyakit &LD, adrPenyakit P);
+void insertLastPenyakit(ListPenyakit &LD, adrPenyakit P);
+void insertFirstPasien(ListPasien &LP, adrPasien P);
+void insertLastPasien(ListPasien &LP, adrPasien P);
 
 // Relasi
 void connectPasienPenyakit(adrPenyakit py, adrPasien ps);
 void deleteRelasiPasien(adrPenyakit py, int idPasien);
 
+// Delete
+void deletePasien(ListPasien &LP, ListPenyakit &LD, int idPasien);
+void deletePenyakit(ListPenyakit &LD, int idPenyakit);
+
 // Tampilkan semua isi list
 void showAllPenyakit(ListPenyakit LD);
 void showAllPasien(ListPasien LP);
 
-// Tampilkan relasi
-void showPenyakitWithPasien(ListPenyakit LD);
-void showPasienDenganDaftarPenyakit(ListPasien LP, ListPenyakit LD);
+// Mencari id penyakit / id pasien
+adrPenyakit findPenyakit(ListPenyakit LD, int id);
+adrPasien findPasien(ListPasien LP, int id);
 
-// Tampilkan berdasarkan kriteria
+// Tampilkan berdasarkan id penyakit / id pasien
 void showPasienDenganPenyakit(ListPenyakit LD, int idPenyakit);
 void showPenyakitDariPasien(ListPenyakit LD, int idPasien);
+
+// Tampilkan semua relasi berdarkan penyakit / pasien
+void showAllPenyakitWithPasien(ListPenyakit LD);
+void showAllPasienWithPenyakit(ListPasien LP, ListPenyakit LD);
 
 // Utility
 int countPasien(adrPenyakit py);
 void showTop5Penyakit(ListPenyakit LD);
+
+////////////////////// FUNCTION TUGAS BESAR //////////////////////
+void showJumlahPasienDariPenyakitTertentu(ListPenyakit LD, int idPenyakit);
+void showJumlahPasienPerPenyakit(ListPenyakit LD);
 
 #endif
