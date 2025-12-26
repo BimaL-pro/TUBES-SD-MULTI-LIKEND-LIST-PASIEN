@@ -66,13 +66,22 @@ void insertLastPasien(ListPasien &LP, adrPasien P) {
     }
 }
 
-void connectPasienPenyakit(adrPenyakit py, adrPasien ps) {
-    adrRelasi R = newRelasi(ps);
-    R->next = py->firstRelasi;
-    py->firstRelasi = R;
+bool connectPasienPenyakit(adrPenyakit py, adrPasien ps) {
+    adrRelasi R = py->firstRelasi;
+    while (R != NULL) {
+        if (R->pasien == ps) {
+            return false;
+        }
+        R = R->next;
+    }
+
+    adrRelasi newR = newRelasi(ps);
+    newR->next = py->firstRelasi;
+    py->firstRelasi = newR;
+    return true;
 }
 
-void deleteRelasiPasien(adrPenyakit py, int idPasien) {
+bool deleteRelasiNode(adrPenyakit py, int idPasien) {
     adrRelasi R = py->firstRelasi;
     adrRelasi prev = NULL;
     while (R != NULL) {
@@ -82,10 +91,19 @@ void deleteRelasiPasien(adrPenyakit py, int idPasien) {
             else
                 prev->next = R->next;
             delete R;
-            return;
+            return true;
         }
         prev = R;
         R = R->next;
+    }
+    return false;
+}
+
+void deleteSemuaRelasiPasien(ListPenyakit &LD, int idPasien) {
+    adrPenyakit P = LD.first;
+    while (P != NULL) {
+        deleteRelasiNode(P, idPasien);
+        P = P->next;
     }
 }
 
@@ -123,23 +141,23 @@ void deletePenyakit(ListPenyakit &LD, int idPenyakit) {
 void deletePasien(ListPasien &LP, ListPenyakit &LD, int idPasien) {
     adrPasien P = LP.first;
     adrPasien prev = NULL;
-
+    
     adrPenyakit D = LD.first;
     while (D != NULL) {
-        deleteRelasiPasien(D, idPasien);
+        deleteRelasiNode(D, idPasien);
         D = D->next;
     }
-
+    
     while (P != NULL && P->idPasien != idPasien) {
         prev = P;
         P = P->next;
     }
-
+    
     if (P == NULL) {
         cout << "Pasien tidak ditemukan\n";
         return;
     }
-
+    
     if (prev == NULL) {
         LP.first = P->next;
     } else {
