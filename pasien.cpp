@@ -66,86 +66,6 @@ void insertLastPasien(ListPasien &LP, adrPasien P) {
     }
 }
 
-void deletePasien(ListPasien &LP, ListPenyakit &LD, int idPasien) {
-    adrPasien P = LP.first;
-    adrPasien prev = NULL;
-
-    //Hapus semua relasi pasien di setiap penyakit
-    adrPenyakit D = LD.first;
-    while (D != NULL) {
-        deleteRelasiPasien(D, idPasien);
-        D = D->next;
-    }
-
-    //Cari pasien di list pasien
-    while (P != NULL && P->idPasien != idPasien) {
-        prev = P;
-        P = P->next;
-    }
-
-    if (P == NULL) {
-        cout << "Pasien tidak ditemukan\n";
-        return;
-    }
-
-    // 3. Hapus node pasien
-    if (prev == NULL) {
-        LP.first = P->next;
-    } else {
-        prev->next = P->next;
-    }
-
-    delete P;
-    cout << "Pasien berhasil dihapus\n";
-}
-
-void deletePenyakit(ListPenyakit &LD, int idPenyakit) {
-    adrPenyakit P = LD.first;
-    adrPenyakit prev = NULL;
-
-    while (P != NULL && P->idPenyakit != idPenyakit) {
-        prev = P;
-        P = P->next;
-    }
-
-    if (P == NULL) {
-        cout << "Penyakit tidak ditemukan\n";
-        return;
-    }
-
-    //Hapus semua relasi
-    adrRelasi R = P->firstRelasi;
-    while (R != NULL) {
-        adrRelasi temp = R;
-        R = R->next;
-        delete temp;
-    }
-
-    //Hapus node penyakit
-    if (prev == NULL) {
-        LD.first = P->next;
-    } else {
-        prev->next = P->next;
-    }
-
-    delete P;
-    cout << "Penyakit berhasil dihapus\n";
-}
-
-adrPenyakit findPenyakit(ListPenyakit LD, int id) {
-    adrPenyakit P = LD.first;
-    while (P != NULL && P->idPenyakit != id)
-        P = P->next;
-    return P;
-}
-
-adrPasien findPasien(ListPasien LD, int id) {
-    adrPasien P = LD.first;
-    while (P != NULL && P->idPasien != id)
-        P = P->next;
-    return P;
-}
-
 void connectPasienPenyakit(adrPenyakit py, adrPasien ps) {
     adrRelasi R = newRelasi(ps);
     R->next = py->firstRelasi;
@@ -169,12 +89,73 @@ void deleteRelasiPasien(adrPenyakit py, int idPasien) {
     }
 }
 
+void deletePenyakit(ListPenyakit &LD, int idPenyakit) {
+    adrPenyakit P = LD.first;
+    adrPenyakit prev = NULL;
+    
+    while (P != NULL && P->idPenyakit != idPenyakit) {
+        prev = P;
+        P = P->next;
+    }
+    
+    if (P == NULL) {
+        cout << "Penyakit tidak ditemukan\n";
+        return;
+    }
+    
+    adrRelasi R = P->firstRelasi;
+    while (R != NULL) {
+        adrRelasi temp = R;
+        R = R->next;
+        delete temp;
+    }
+    
+    if (prev == NULL) {
+        LD.first = P->next;
+    } else {
+        prev->next = P->next;
+    }
+    
+    delete P;
+    cout << "Penyakit berhasil dihapus\n";
+}
+
+void deletePasien(ListPasien &LP, ListPenyakit &LD, int idPasien) {
+    adrPasien P = LP.first;
+    adrPasien prev = NULL;
+
+    adrPenyakit D = LD.first;
+    while (D != NULL) {
+        deleteRelasiPasien(D, idPasien);
+        D = D->next;
+    }
+
+    while (P != NULL && P->idPasien != idPasien) {
+        prev = P;
+        P = P->next;
+    }
+
+    if (P == NULL) {
+        cout << "Pasien tidak ditemukan\n";
+        return;
+    }
+
+    if (prev == NULL) {
+        LP.first = P->next;
+    } else {
+        prev->next = P->next;
+    }
+    
+    delete P;
+    cout << "Pasien berhasil dihapus\n";
+}
+
 void showAllPenyakit(ListPenyakit LD) {
     if (LD.first == NULL) {
         cout << "Data penyakit kosong" << endl;
         return;
     }
-
+    
     adrPenyakit P = LD.first;
     while (P != NULL) {
         cout << "ID Penyakit : " << P->idPenyakit << endl;
@@ -190,7 +171,7 @@ void showAllPasien(ListPasien LD) {
         cout << "Data pasien kosong" << endl;
         return;
     }
-
+    
     adrPasien P = LD.first;
     while (P != NULL) {
         cout << "ID Pasien : " << P->idPasien << endl;
@@ -201,7 +182,69 @@ void showAllPasien(ListPasien LD) {
     }
 }
 
-void showPenyakitWithPasien(ListPenyakit LD) {
+adrPenyakit findPenyakit(ListPenyakit LD, int id) {
+    adrPenyakit P = LD.first;
+    while (P != NULL && P->idPenyakit != id)
+    P = P->next;
+    return P;
+}
+
+adrPasien findPasien(ListPasien LD, int id) {
+    adrPasien P = LD.first;
+    while (P != NULL && P->idPasien != id)
+        P = P->next;
+    return P;
+}
+
+void showPasienDenganPenyakit(ListPenyakit LD, int idPenyakit) {
+    adrPenyakit P = findPenyakit(LD, idPenyakit);
+    
+    if (P == NULL) {
+        cout << "Penyakit tidak ditemukan" << endl;
+        return;
+    }
+    cout << "Daftar Pasien dengan Penyakit "
+    << P->nama << " :" << endl;
+
+    adrRelasi R = P->firstRelasi;
+    if (R == NULL) {
+        cout << "Belum ada pasien" << endl;
+        return;
+    }
+
+    while (R != NULL) {
+        cout << "- " << R->pasien->nama
+            << " (Umur " << R->pasien->umur << ")" << endl;
+            R = R->next;
+    }
+}
+
+void showPenyakitDariPasien(ListPenyakit LD, int idPasien) {
+    bool ketemu = false;
+    adrPenyakit P = LD.first;
+    
+    cout << "Penyakit yang dimiliki pasien ID "
+    << idPasien << " :" << endl;
+
+    while (P != NULL) {
+        adrRelasi R = P->firstRelasi;
+        while (R != NULL) {
+            if (R->pasien->idPasien == idPasien) {
+                cout << "- " << P->nama << endl;
+                ketemu = true;
+                break;
+            }
+            R = R->next;
+        }
+        P = P->next;
+    }
+    
+    if (!ketemu) {
+        cout << "Pasien tidak memiliki penyakit atau tidak ditemukan" << endl;
+    }
+}
+
+void showAllPenyakitWithPasien(ListPenyakit LD) {
     adrPenyakit P = LD.first;
     while (P != NULL) {
         cout << "Penyakit: " << P->nama << endl;
@@ -214,7 +257,7 @@ void showPenyakitWithPasien(ListPenyakit LD) {
     }
 }
 
-void showPasienDenganDaftarPenyakit(ListPasien LP, ListPenyakit LD) {
+void showAllPasienWithPenyakit(ListPasien LP, ListPenyakit LD) {
     adrPasien P = LP.first;
 
     while (P != NULL) {
@@ -247,55 +290,6 @@ void showPasienDenganDaftarPenyakit(ListPasien LP, ListPenyakit LD) {
     }
 }
 
-void showPasienDenganPenyakit(ListPenyakit LD, int idPenyakit) {
-    adrPenyakit P = findPenyakit(LD, idPenyakit);
-
-    if (P == NULL) {
-        cout << "Penyakit tidak ditemukan" << endl;
-        return;
-    }
-    cout << "Daftar Pasien dengan Penyakit "
-        << P->nama << " :" << endl;
-
-    adrRelasi R = P->firstRelasi;
-    if (R == NULL) {
-        cout << "Belum ada pasien" << endl;
-        return;
-    }
-
-    while (R != NULL) {
-        cout << "- " << R->pasien->nama
-            << " (Umur " << R->pasien->umur << ")" << endl;
-        R = R->next;
-    }
-}
-
-void showPenyakitDariPasien(ListPenyakit LD, int idPasien) {
-    bool ketemu = false;
-    adrPenyakit P = LD.first;
-
-    cout << "Penyakit yang dimiliki pasien ID "
-        << idPasien << " :" << endl;
-
-    while (P != NULL) {
-        adrRelasi R = P->firstRelasi;
-        while (R != NULL) {
-            if (R->pasien->idPasien == idPasien) {
-                cout << "- " << P->nama << endl;
-                ketemu = true;
-                break;
-            }
-            R = R->next;
-        }
-        P = P->next;
-    }
-
-    if (!ketemu) {
-        cout << "Pasien tidak memiliki penyakit atau tidak ditemukan" << endl;
-    }
-}
-
-
 int countPasien(adrPenyakit py) {
     int count = 0;
     adrRelasi R = py->firstRelasi;
@@ -315,7 +309,6 @@ void showTop5Penyakit(ListPenyakit LD) {
     StatistikPenyakit data[100];
     int n = 0;
 
-    //Ambil data penyakit + jumlah pasien
     adrPenyakit P = LD.first;
     while (P != NULL) {
         data[n].nama = P->nama;
@@ -324,7 +317,6 @@ void showTop5Penyakit(ListPenyakit LD) {
         P = P->next;
     }
 
-    //Sorting DESCENDING (Bubble Sort)
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (data[j].jumlah < data[j + 1].jumlah) {
@@ -335,7 +327,6 @@ void showTop5Penyakit(ListPenyakit LD) {
         }
     }
 
-    //Tampilkan maksimal 5
     cout << "Top 5 Penyakit Terbanyak:\n";
     int limit = (n < 5) ? n : 5;
     for (int i = 0; i < limit; i++) {
@@ -343,5 +334,39 @@ void showTop5Penyakit(ListPenyakit LD) {
             << data[i].nama
             << " : " << data[i].jumlah
             << " pasien\n";
+    }
+}
+
+void showJumlahPasienDariPenyakitTertentu(ListPenyakit LD, int idPenyakit) {
+    adrPenyakit P = findPenyakit(LD, idPenyakit);
+
+    if (P == NULL) {
+        cout << "Penyakit dengan ID " << idPenyakit << " tidak ditemukan\n";
+        return;
+    }
+
+    int jumlah = countPasien(P);
+
+    cout << "Jumlah pasien dengan penyakit "
+        << P->nama
+        << " (ID " << idPenyakit << ") : "
+        << jumlah << " pasien\n";
+}
+
+void showJumlahPasienPerPenyakit(ListPenyakit LD) {
+    if (LD.first == NULL) {
+        cout << "Data penyakit kosong\n";
+        return;
+    }
+
+    cout << "Jumlah Pasien per Penyakit:\n";
+
+    adrPenyakit P = LD.first;
+    while (P != NULL) {
+        cout << "ID " << P->idPenyakit
+            << " | " << P->nama
+            << " : " << countPasien(P)
+            << " pasien\n";
+        P = P->next;
     }
 }
