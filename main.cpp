@@ -1,4 +1,4 @@
-#include "pasien.h"
+#include "rumah_sakit.h"
 
 int main() {
     ListPenyakit LD;
@@ -120,7 +120,7 @@ int main() {
                 cout << "1. Tambah Penyakit\n";
                 cout << "2. Tambah Pasien\n";
                 cout << "3. Hubungkan Pasien dengan Penyakit\n";
-                cout << "4. Hapus Relasi Pasien dengan Penyakit\n";
+                cout << "4. Hapus Relasi Pasien dengan Penyakit Tertentu\n";
                 cout << "5. Hapus Semua Relasi Pasien dengan Penyakit\n";
                 cout << "6. Hapus Penyakit\n";
                 cout << "7. Hapus Pasien\n";
