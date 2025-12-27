@@ -1,4 +1,4 @@
-#include "pasien.h"
+#include "rumah_sakit.h"
 
 void createListPenyakit(ListPenyakit &LD) {
     LD.first = NULL;
