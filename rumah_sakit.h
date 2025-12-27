@@ -1,5 +1,5 @@
-#ifndef PASIEN_H
-#define PASIEN_H
+#ifndef RUMAH_SAKIT_H
+#define RUMAH_SAKIT_H
 
 #include <iostream>
 #include <string>
